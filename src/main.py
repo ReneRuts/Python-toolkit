@@ -1,5 +1,13 @@
 from time import sleep
 import sys
+from mac_spoofing import main as mac_spoofing
+from web_scraping import main as web_scraping
+from service_comparator import main as service_comparator
+from mini_ddos import main as mini_ddos
+from remote_command_executor import main as remote_command_executor
+from password_tools import main as password_tools
+from data_hider import main as data_hider
+from file_encryption import main as file_encryption
 
 def print_menu():
     print("----------------------------------")
@@ -29,29 +37,21 @@ def main():
                 sleep(2) # Add a delay before showing the menu again
                 continue
             if choice == 1:
-                print("\n[MAC Spoofing]")
-                # mac_spoofing()
+                mac_spoofing()
             elif choice == 2:
-                print("\n[WEB Scraping]")
-                # web_scraping()
+                web_scraping()
             elif choice == 3:
-                print("\n[Service Comparator]")
-                # service_comparator()
+                service_comparator()
             elif choice == 4:
-                print("\n[Mini DDOS Attack]")
-                # mini_ddos()
+                mini_ddos()
             elif choice == 5:
-                print("\n[Remote Command Executor]")
-                # remote_command_executor()
+                remote_command_executor()
             elif choice == 6:
-                print("\n[Password Generator & Strength Analyser]")
-                # password_generator_and_strength_analyzer()
+                password_tools()
             elif choice == 7:
-                print("\n[Data -> Image Hider]")
-                # data_hider()
+                data_hider()
             elif choice == 8:
-                print("\n[Secure File Encryption & Decryption]")
-                # secure_file_encryption_and_decryption()
+                file_encryption()
             elif choice == 9:
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
