@@ -72,7 +72,7 @@ def main():
         print("3. Exit")
         print("----------------------------------")
 
-        choice = input("Select an option (1-3): ").strip()
+        choice = input("Select an option (0-3): ").strip()
 
         if choice == "0":
             display_info()

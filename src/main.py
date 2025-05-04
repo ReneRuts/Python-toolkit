@@ -2,12 +2,12 @@ from time import sleep
 import sys
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
-from service_comparator import main as service_comparator
-from mini_ddos import main as mini_ddos
-from remote_command_executor import main as remote_command_executor
-from password_tools import main as password_tools
-from data_hider import main as data_hider
-from file_encryption import main as file_encryption
+# from service_comparator import main as service_comparator
+# from mini_ddos import main as mini_ddos
+# from remote_command_executor import main as remote_command_executor
+# from password_tools import main as password_tools
+# from data_hider import main as data_hider
+# from file_encryption import main as file_encryption
 
 def print_menu():
     print("----------------------------------")
@@ -41,17 +41,23 @@ def main():
             elif choice == 2:
                 web_scraping()
             elif choice == 3:
-                service_comparator()
+                #service_comparator()
+                print("\n[Info] Service Comparator feature is not yet implemented.")
             elif choice == 4:
-                mini_ddos()
+                #mini_ddos()
+                print("\n[Info] Mini DDOS Attack feature is not yet implemented.")
             elif choice == 5:
-                remote_command_executor()
+                #remote_command_executor()
+                print("\n[Info] Remote Command Executor feature is not yet implemented.")
             elif choice == 6:
-                password_tools()
+                #password_tools()
+                print("\n[Info] Password Tools feature is not yet implemented.")
             elif choice == 7:
-                data_hider()
+                #data_hider()
+                print("\n[Info] Data Hider feature is not yet implemented.")
             elif choice == 8:
-                file_encryption()
+                #file_encryption()
+                print("\n[Info] File Encryption & Decryption feature is not yet implemented.")
             elif choice == 9:
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
