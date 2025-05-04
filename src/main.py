@@ -16,7 +16,7 @@ def print_menu():
     print("9. Exit")
     print("----------------------------------")
 
-
+# The main program is run here using an interactive menu.
 def main():
     while True:
         try:
@@ -62,7 +62,6 @@ def main():
         except KeyboardInterrupt:
             print("\n[Warning] Please use option 9 to exit!\n")
             sleep(2)
-
         
         except Exception as e:
             print("\n[Unexpected Error] Something went wrong:")
