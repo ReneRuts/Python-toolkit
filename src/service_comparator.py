@@ -96,9 +96,9 @@ def config_menu():
         sleep(2)
 
 def modify_config():
-    print_feature_header("Modify Configuration")
+    print_feature_header("Modify Service Comparator Configuration")
     try:
-        config.show_config()
+        config.show_config(mode="service_comparator")
         config_menu()
     except KeyboardInterrupt:
         print("\n[Warning] Please use option 3 to exit!\n")
@@ -108,7 +108,7 @@ def modify_config():
         sleep(2)
 
 def display_info():
-    print_feature_header("Service Comparator")
+    print_feature_header("Service Comparator Info")
     print("\n- Compares active services across multiple hosts.")
     print("- Uses SSH to retrieve running services.")
     print("- Scans ports for accessibility (e.g. SSH, HTTP, HTTPS, MySQL).")

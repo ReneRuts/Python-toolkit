@@ -3,7 +3,7 @@ import sys
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
 from service_comparator import main as service_comparator
-# from mini_ddos import main as mini_ddos
+from mini_ddos import main as mini_ddos
 # from remote_command_executor import main as remote_command_executor
 # from password_tools import main as password_tools
 # from data_hider import main as data_hider
@@ -45,8 +45,7 @@ def main():
             elif choice == 3:
                 service_comparator()
             elif choice == 4:
-                #mini_ddos()
-                print("\n[Info] Mini DDOS Attack feature is not yet implemented.")
+                mini_ddos()
             elif choice == 5:
                 #remote_command_executor()
                 print("\n[Info] Remote Command Executor feature is not yet implemented.")
