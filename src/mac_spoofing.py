@@ -4,6 +4,9 @@ from util import print_feature_header
 from scapy.all import RandMAC
 from time import sleep
 
+def check_os():
+    return os.name == 'nt'
+
 # Get the current MAC address.
 def get_current_mac(interface):
     try:
@@ -60,6 +63,7 @@ def display_info():
     print("- This can help maintain privacy and bypass certain network restrictions.")
     print("- The change is temporary and will be reset after a reboot.")
     print("~~ Requires administrator privileges to apply changes. ~~")
+    print("\n~~ This is only supported on Linux! ~~\n")
     print("-" * 40)
     input("Press Enter to continue...")
 
@@ -79,6 +83,10 @@ def main():
             if choice == "0":
                 display_info()
             elif choice == "1":
+                if check_os(): # checks if the os is linux or not.
+                    print("[Error] This feature is not supported on Windows.")
+                    sleep(2)
+                    return
                 mac_spoofing()
             elif choice == "2":
                 print("\nReturning to Main Menu...\n")
