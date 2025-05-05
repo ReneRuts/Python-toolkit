@@ -7,21 +7,23 @@ from web_scraping import main as web_scraping
 # from remote_command_executor import main as remote_command_executor
 # from password_tools import main as password_tools
 # from data_hider import main as data_hider
+# from file_scanner import main as file_scanner
 # from file_encryption import main as file_encryption
 
 def print_menu():
     print("----------------------------------")
     print("--- Python Toolkit - Main Menu ---")
     print("----------------------------------")
-    print("1. MAC spoofing") # Scapy, OS
-    print("2. WEB scraping") # Requests, BeautifulSoup, Selenium
-    print("3. Service Comparator") # Socket, Paramiko
-    print("4. Mini DDOS Attack") # Threading, Time, Socket
-    print("5. Remote Command Executor") # Paramiko, Subprocess
-    print("6. Password generator & Strength Analyzer") # Passlib, re, random
-    print("7. Data -> Image Hider") # Stegano, OS
-    print("8. Secure File Encryption & Decryption") # Cryptography, Pathlib, Shutil, send2trash
-    print("9. Exit")
+    print("1. MAC spoofing")  # Scapy, OS
+    print("2. WEB scraping")  # Requests, BeautifulSoup, Selenium
+    print("3. Service Comparator")  # Socket, Paramiko, JSON
+    print("4. Mini DDOS Attack")  # Threading, Time, Socket, Sys
+    print("5. Remote Command Executor")  # Paramiko, Subprocess, Argparse
+    print("6. Password generator & Strength Analyzer")  # Passlib, re, random, itertools
+    print("7. Data -> Image Hider")  # Stegano, OS, Base64, image_viewer
+    print("8. Secure File Encryption & Decryption")  # Cryptography, Pathlib, Shutil, Send2trash, Datetime
+    print("9. Smart File Scanner & Email Reporter") # email, fnmatch, glob, http
+    print("10. Exit")
     print("----------------------------------")
 
 # The main program is run here using an interactive menu.
@@ -29,11 +31,11 @@ def main():
     while True:
         try:
             print_menu()
-            selected_option = input("Select an option (1-9): ").strip()
+            selected_option = input("Select an option (1-10): ").strip()
             try:
                 choice = int(selected_option)
             except ValueError:
-                print("\n[Error] Invalid input. Please enter a number between 1 and 9.")
+                print("\n[Error] Invalid input. Please enter a number between 1 and 10.")
                 sleep(2) # Add a delay before showing the menu again
                 continue
             if choice == 1:
@@ -59,6 +61,9 @@ def main():
                 #file_encryption()
                 print("\n[Info] File Encryption & Decryption feature is not yet implemented.")
             elif choice == 9:
+                #file_scanner()
+                print("\n[Info] File Scanner & Email Reporter feature is not yet implemented.")
+            elif choice == 10:
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
             else:
@@ -66,7 +71,7 @@ def main():
                 sleep(2)
 
         except KeyboardInterrupt:
-            print("\n[Warning] Please use option 9 to exit!\n")
+            print("\n[Warning] Please use option 10 to exit!\n")
             sleep(2)
         
         except Exception as e:
