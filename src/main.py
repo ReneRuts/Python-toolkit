@@ -62,8 +62,8 @@ def main():
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
             else:
-                print("\n[Error] Invalid option. Please try again!")
-                sleep(2) # Add a delay before showing the menu again
+                print("\n[Error] Invalid option. Please try again!\n")
+                sleep(2)
 
         except KeyboardInterrupt:
             print("\n[Warning] Please use option 9 to exit!\n")
@@ -71,7 +71,6 @@ def main():
         
         except Exception as e:
             print("\n[Unexpected Error] Something went wrong:")
-            print(f"Error Type: {type(e).__name__}")
             print(f"Error Message: {e}\n")
             print("Restarting menu...\n")
 

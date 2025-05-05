@@ -10,7 +10,7 @@ from time import sleep
 def display_info():
     print_feature_header("WEB Scraping")
     print("\n- WEB Scraping allows you to extract data from websites.")
-    print("- Static pages can be scraped using Requests and BeautifulSoup modules.")
+    print("- Static pages can be scraped using Requests and BeautifulSoup.")
     print("- Dynamic pages can be scraped using Selenium.")
     print("\n- Note:\n   This feature gathers the title and headers from the page.\n")
     print("~~ Requires permission from the website owner!! ~~")
@@ -18,7 +18,7 @@ def display_info():
     input("Press Enter to continue...")
 
 def is_valid_url(url):
-    pattern = r"^https://([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(/.*)?$"
+    pattern = r"^https://(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(/.*)?$"
     return True if re.match(pattern, url) else False
 
 def fetch_html(url):
@@ -50,10 +50,10 @@ def scrape_with_selenium(url):
 
 def web_scraping():
     print_feature_header("WEB Scraping")
-    url = input("Enter the URL to scrape: ").strip()
+    url = input("Enter the URL to scrape Format: https://example.com: ").strip()
 
     if not is_valid_url(url):
-        print("[Error] Invalid URL format! Please enter a valid URL.")
+        print("[Error] Invalid URL format! Please enter a valid URL. Format: https://example.com")
         return
 
     choice = input("Use Requests or Selenium (r/s): ").strip().lower()
