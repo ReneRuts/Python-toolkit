@@ -1,10 +1,11 @@
-from util import print_feature_header
 import requests
 import re
+from util import print_feature_header
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from time import sleep
 
 def display_info():
     print_feature_header("WEB Scraping")
@@ -17,7 +18,7 @@ def display_info():
     input("Press Enter to continue...")
 
 def is_valid_url(url):
-    pattern = r"^(https?://)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(/.*)?$"
+    pattern = r"^https://([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(/.*)?$"
     return True if re.match(pattern, url) else False
 
 def fetch_html(url):
@@ -81,26 +82,31 @@ def web_scraping():
 
 def main():
     while True:
-        print_feature_header("WEB Scraping")
-        print("0. Get info about this feature")
-        print("1. Start WEB Scraping")
-        print("2. Return to Main Menu")
-        print("3. Exit")
+        try:
+            print_feature_header("WEB Scraping")
+            print("0. Get info about this feature")
+            print("1. Start WEB Scraping")
+            print("2. Return to Main Menu")
+            print("3. Exit")
+            print("----------------------------------")
 
-        choice = input("Select an option (0-3): ").strip()
-        
-        if choice == "0":
-            display_info()
-        elif choice == "1":
-            web_scraping()
-        elif choice == "2":
-            print("\nReturning to Main Menu...\n")
-            return
-        elif choice == "3":
-            print("Exiting program. Goodbye!")
-            exit(0)
-        else:
-            print("[Error] Invalid option. Please try again!")
+            choice = input("Select an option (0-3): ").strip()
+            
+            if choice == "0":
+                display_info()
+            elif choice == "1":
+                web_scraping()
+            elif choice == "2":
+                print("\nReturning to Main Menu...\n")
+                return
+            elif choice == "3":
+                print("Exiting program. Goodbye!")
+                exit(0)
+            else:
+                print("[Error] Invalid option. Please try again!")
+        except KeyboardInterrupt:
+            print("\n[Warning] Please use option 3 to exit!\n")
+            sleep(2)
 
 if __name__ == "__main__":
     main()

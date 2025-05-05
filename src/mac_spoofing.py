@@ -2,6 +2,7 @@ import os
 import re
 from util import print_feature_header
 from scapy.all import RandMAC
+from time import sleep
 
 # Get the current MAC address.
 def get_current_mac(interface):
@@ -65,27 +66,31 @@ def display_info():
 # Display the menu and start the feature.
 def main():
     while True:
-        print_feature_header("MAC Spoofing")
-        print("0. Get info about this feature")
-        print("1. Start MAC Spoofing")
-        print("2. Return to Main Menu")
-        print("3. Exit")
-        print("----------------------------------")
+        try:
+            print_feature_header("MAC Spoofing")
+            print("0. Get info about this feature")
+            print("1. Start MAC Spoofing")
+            print("2. Return to Main Menu")
+            print("3. Exit")
+            print("----------------------------------")
 
-        choice = input("Select an option (0-3): ").strip()
+            choice = input("Select an option (0-3): ").strip()
 
-        if choice == "0":
-            display_info()
-        elif choice == "1":
-            mac_spoofing()
-        elif choice == "2":
-            print("\nReturning to Main Menu...\n")
-            return
-        elif choice == "3":
-            print("Exiting program. Goodbye!")
-            exit(0)
-        else:
-            print("\n[Error] Invalid option. Please try again!")
+            if choice == "0":
+                display_info()
+            elif choice == "1":
+                mac_spoofing()
+            elif choice == "2":
+                print("\nReturning to Main Menu...\n")
+                return
+            elif choice == "3":
+                print("Exiting program. Goodbye!")
+                exit(0)
+            else:
+                print("\n[Error] Invalid option. Please try again!")
+        except KeyboardInterrupt:
+            print("\n[Warning] Please use option 3 to exit!\n")
+            sleep(2)
 
 if __name__ == "__main__":
     main()
