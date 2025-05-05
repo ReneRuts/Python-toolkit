@@ -10,10 +10,22 @@ class Config:
         self.TARGET_HOST = "127.0.0.1"
         self.TARGET_PORT = 80
     
-    def update_config(self, **kwargs):
-        for key, value in kwargs.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
+    def update_config(self, max_hosts=None, default_ports=None, max_threads=None, request_rate=None, payload_size=None, target_host=None, target_port=None):
+        if max_hosts is not None:
+            self.MAX_HOSTS = max_hosts
+        if default_ports is not None:
+            self.DEFAULT_PORTS = default_ports
+        if max_threads is not None:
+            self.MAX_THREADS = max_threads
+        if request_rate is not None:
+            self.REQUEST_RATE = request_rate
+        if payload_size is not None:
+            self.PAYLOAD_SIZE = payload_size
+        if target_host is not None:
+            self.TARGET_HOST = target_host
+        if target_port is not None:
+            self.TARGET_PORT = target_port
+        
     
     def show_config(self, mode="all"):
         print("\n[Current Configuration]")
