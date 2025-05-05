@@ -2,7 +2,7 @@ from time import sleep
 import sys
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
-# from service_comparator import main as service_comparator
+from service_comparator import main as service_comparator
 # from mini_ddos import main as mini_ddos
 # from remote_command_executor import main as remote_command_executor
 # from password_tools import main as password_tools
@@ -43,8 +43,7 @@ def main():
             elif choice == 2:
                 web_scraping()
             elif choice == 3:
-                #service_comparator()
-                print("\n[Info] Service Comparator feature is not yet implemented.")
+                service_comparator()
             elif choice == 4:
                 #mini_ddos()
                 print("\n[Info] Mini DDOS Attack feature is not yet implemented.")

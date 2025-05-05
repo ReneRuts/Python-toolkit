@@ -1,0 +1,152 @@
+import json
+import socket
+import paramiko
+from time import sleep
+from util import print_feature_header
+from config import config
+
+
+def check_port(host, port):
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(2)
+            return s.connect_ex((host,port)) == 0
+    except Exception:
+        return False
+
+def fetch_services_via_ssh(host, username, password):
+    services = []
+    try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(host, username, password, timeout=5)
+        stdin, stdout, stderr = ssh.exec_command("systemctl list-units --type=service")
+        for line in stdout.readlines():
+            if ".service" in line:
+                services.append(line.split()[0])
+        ssh.close()
+    except Exception as e:
+        print(f"[Error] SSH connection failed on {host}: {e}")
+    return services
+
+def compare_services():
+    print_feature_header("Service Comparator")
+    try:
+        num_hosts = int(input(f"Enter the number of hosts to compare (1 - {config.MAX_HOSTS}): ").strip())
+        if num_hosts < 1 or num_hosts > config.MAX_HOSTS:
+            print(f"[Error] Invalid number! Only 1 - {config.MAX_HOSTS} hosts supported.")
+            return
+    except ValueError:
+        print("[Error] Please enter a valid number.")
+        return
+    
+    host_data = []
+    for i in range(num_hosts):
+        print(f"\nHost {i+1}:")
+        host = input("Enter the host IP or domain: ").strip()
+        username = input("Enter the SSH username: ").strip()
+        password = input("Enter the SSH password: ").strip()
+
+        services = fetch_services_via_ssh(host, username, password)
+        open_ports = {port: check_port(host, port) for port in config.DEFAULT_PORTS}
+        host_data.append({
+            "host": host,
+            "services": services,
+            "open_ports": open_ports
+        })
+    print("\n[Info] Getting ready to save the data...")
+    with open("services_comparison.json", "w") as json_file:
+        json.dump(host_data, json_file, indent=4)
+    print("\n[Info] Data saved successfully to \"services_comparison.json\".")
+    print("\n[Info] Comparison complete!")
+
+def config_menu():
+    print("0. Modify MAX_HOSTS")
+    print("1. Modify DEFAULT_PORTS")
+    print("2. Return to Service Comparator Menu")
+    print("3. Exit")
+    print("----------------------------------")
+    choice = input("Select an option (0-3): ").strip()
+    if choice == "0":
+        new_max_hosts = input(f"Enter new MAX_HOSTS value (Current: {config.MAX_HOSTS}, \"quit\" to keep): ").strip()
+        if new_max_hosts == "quit":
+            print("[Info] Keeping current MAX_HOSTS value.")
+        new_max_hosts = int(new_max_hosts)
+        if new_max_hosts < 1:
+            print("[Error] Invalid value! Must be greater than 0.")
+        else:
+            config.update_config(max_hosts=new_max_hosts)
+            print(f"[Info] MAX_HOSTS updated to {config.MAX_HOSTS}.")
+    elif choice == "1":
+        new_ports = input(f"Enter new DEFAULT_PORTS separated by a comma, (Current: {config.DEFAULT_PORTS}, \"quit\" to keep): ").strip()
+        if new_ports == "quit":
+            print("[Info] Keeping current DEFAULT_PORTS value.")
+        else:
+            new_ports_list = [int(port.strip()) for port in new_ports.split(",") if port.strip().isdigit()]
+            config.update_config(default_ports=new_ports_list)
+            print(f"[Info] DEFAULT_PORTS updated to {config.DEFAULT_PORTS}.")
+    elif choice == "2":
+        print("\nReturning to Service Comparator Menu...\n")
+        return
+    elif choice == "3":
+        print("Exiting program. Goodbye!")
+        exit(0)
+    else:
+        print("[Error] Invalid option. Please try again!")
+        sleep(2)
+
+def modify_config():
+    print_feature_header("Modify Configuration")
+    try:
+        config.show_config()
+        config_menu()
+    except KeyboardInterrupt:
+        print("\n[Warning] Please use option 3 to exit!\n")
+        sleep(2)
+    except Exception as e:
+        print(f"[Error] Something went wrong: {e}")
+        sleep(2)
+
+def display_info():
+    print_feature_header("Service Comparator")
+    print("\n- Compares active services across multiple hosts.")
+    print("- Uses SSH to retrieve running services.")
+    print("- Scans ports for accessibility (e.g. SSH, HTTP, HTTPS, MySQL).")
+    print(f"- Supports up to {config.MAX_HOSTS} hosts.")
+    print("~~ Results are saved in JSON format. ~~")
+    print("-" * 40)
+    input("Press Enter to continue...")
+
+def main():
+    while True:
+        try:
+            print_feature_header("Service Comparator")
+            print("0. Get info about this feature")
+            print("1. Start Service Comparison")
+            print("2. Modify Configuration")
+            print("3. Return to Main Menu")
+            print("4. Exit")
+            print("----------------------------------")
+
+            choice = input("Select an option (0-4): ").strip()
+            
+            if choice == "0":
+                display_info()
+            elif choice == "1":
+                compare_services()
+            elif choice == "2":
+                modify_config()
+            elif choice == "3":
+                print("\nReturning to Main Menu...\n")
+                return
+            elif choice == "4":
+                print("Exiting program. Goodbye!")
+                exit(0)
+            else:
+                print("[Error] Invalid option. Please try again!")
+        except KeyboardInterrupt:
+            print("\n[Warning] Please use option 3 to exit!\n")
+            sleep(2)
+
+if __name__ == "__main__":
+    main()
