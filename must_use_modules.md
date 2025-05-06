@@ -1,26 +1,28 @@
-argparse
-base64
-bs4 (beautiful-soup)
-datetime
-email
-fnmatch
-glob
-http
-image_viewer => isn't needed anymore, but used cv2 instead :D
-itertools
-json
-os
-paramiko
-pathlib
-random
-re
-requests
-scapy
-selenium
-send2trash
-shutil
-socket
-subprocess
-sys
-threading
-time
+# List of must use modules
+
+- argparse
+- base64
+- bs4 (beautiful-soup)
+- datetime
+- email
+- fnmatch
+- glob
+- http
+- image_viewer => isn't needed anymore, but used cv2 instead :D
+- itertools
+- json
+- os
+- paramiko
+- pathlib
+- random
+- re
+- requests
+- scapy
+- selenium
+- send2trash
+- shutil
+- socket
+- subprocess
+- sys
+- threading
+- time
