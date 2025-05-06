@@ -9,7 +9,7 @@ from remote_command_executor import main as remote_command_executor
 from password_tools import main as password_tools
 from data_hider import main as data_hider
 from file_encryption import main as file_encryption
-# from file_scanner import main as file_scanner
+from file_scanner import main as file_scanner
 
 def print_menu():
     print("----------------------------------")
@@ -56,8 +56,7 @@ def main():
             elif choice == 8:
                 file_encryption()
             elif choice == 9:
-                #file_scanner()
-                print("\n[Info] File Scanner & Email Reporter feature is not yet implemented.")
+                file_scanner()
             elif choice == 10:
                 print("Exiting program. Goodbye!")
                 sys.exit(0)

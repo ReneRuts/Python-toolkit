@@ -18,6 +18,9 @@ class Config:
         self.PASS_LENGTH = 12
         # File encryption settings
         self.KEY_FILE = Path("file_encryption_key.key")
+        # File scanner settings
+        self.EMAIL_SENDER = "your_email@example.com"
+        self.EMAIL_PASSWORD = "your_email_password"
 
     def update_config(
         self,
