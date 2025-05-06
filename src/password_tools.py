@@ -144,6 +144,9 @@ def main():
                 password = input("Enter password to hash: ").strip()
                 hashed = sha256_crypt.hash(password)
                 print(f"\nHashed Password: {hashed}")
+                hash_only = hashed.split('$')[-1]
+                print(f"Raw Hash: {hash_only}")
+
             elif choice == "4":
                 modify_config()
             elif choice == "5":

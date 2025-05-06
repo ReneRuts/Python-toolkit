@@ -1,5 +1,6 @@
-from time import sleep
+import webbrowser
 import sys
+from time import sleep
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
 from service_comparator import main as service_comparator
@@ -62,6 +63,8 @@ def main():
             elif choice == 10:
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
+            elif choice == 11:
+                webbrowser.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
             else:
                 print("\n[Error] Invalid option. Please try again!\n")
                 sleep(2)

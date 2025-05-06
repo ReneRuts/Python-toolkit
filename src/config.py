@@ -18,7 +18,8 @@ class Config:
 
     def update_config(
         self,
-        max_hosts=None, default_ports=None,
+        max_hosts= None,
+        default_ports=None,
         max_threads=None, request_rate=None, payload_size=None,
         target_host=None, target_port=None,
         pass_lower=None, pass_upper=None, pass_digits=None, pass_symbols=None,
