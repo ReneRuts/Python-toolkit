@@ -4,7 +4,7 @@ from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
 from service_comparator import main as service_comparator
 from mini_ddos import main as mini_ddos
-# from remote_command_executor import main as remote_command_executor
+from remote_command_executor import main as remote_command_executor
 # from password_tools import main as password_tools
 # from data_hider import main as data_hider
 # from file_scanner import main as file_scanner
@@ -47,8 +47,7 @@ def main():
             elif choice == 4:
                 mini_ddos()
             elif choice == 5:
-                #remote_command_executor()
-                print("\n[Info] Remote Command Executor feature is not yet implemented.")
+                remote_command_executor()
             elif choice == 6:
                 #password_tools()
                 print("\n[Info] Password Tools feature is not yet implemented.")
