@@ -74,16 +74,15 @@ def analyze_strength(password):
         for msg in messages:
             print(msg)
 
-
-def modify_config():
-    print_feature_header("Modify Password Configuration")
-    config.show_config(mode="password")
-
-    def ask_bool(prompt, current):
+def ask_bool(prompt, current):
         answer = input(f"{prompt} (y/n, current: {current}): ").strip().lower()
         if answer == '':
             return current
         return answer == 'y'
+
+def modify_config():
+    print_feature_header("Modify Password Configuration")
+    config.show_config(mode="password")
 
     lower = ask_bool("Include lowercase letters", config.PASS_INCLUDE_LOWER)
     upper = ask_bool("Include uppercase letters", config.PASS_INCLUDE_UPPER)

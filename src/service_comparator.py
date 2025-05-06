@@ -2,9 +2,9 @@ import json
 import socket
 import paramiko
 from time import sleep
+from pathlib import Path
 from util import print_feature_header
 from config import config
-
 
 def check_port(host, port):
     try:
@@ -54,10 +54,15 @@ def compare_services():
             "services": services,
             "open_ports": open_ports
         })
+    
+    output_dir = Path("output/service_comparator")
+    output_dir.mkdir(parents=True, exist_ok=True)
     print("\n[Info] Getting ready to save the data...")
-    with open("services_comparison.json", "w") as json_file:
+    json_file_path = output_dir / "services_comparison.json"
+    with open(json_file_path, "w") as json_file:
         json.dump(host_data, json_file, indent=4)
-    print("\n[Info] Data saved successfully to \"services_comparison.json\".")
+    
+    print(f"\n[Info] Data saved successfully to {json_file_path}.")
     print("\n[Info] Comparison complete!")
 
 def config_menu():

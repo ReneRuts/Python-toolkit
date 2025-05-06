@@ -1,3 +1,4 @@
+from pathlib import Path
 class Config:
     def __init__(self):
         # Service comparator settings
@@ -15,6 +16,8 @@ class Config:
         self.PASS_INCLUDE_DIGITS = True
         self.PASS_INCLUDE_SYMBOLS = True
         self.PASS_LENGTH = 12
+        # File encryption settings
+        self.KEY_FILE = Path("file_encryption_key.key")
 
     def update_config(
         self,
