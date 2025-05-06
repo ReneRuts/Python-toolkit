@@ -168,4 +168,6 @@ Scan directories for files matching a specific pattern and simulate sending an e
   - `email.mime` constructs the report.
   - `http.client` is used to simulate HTTP status reporting for email operations.
 
+---
+
 _There is an easter egg hidden in the code! Have Fun!_
