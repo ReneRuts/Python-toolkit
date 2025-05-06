@@ -15,7 +15,7 @@ def send_packet():
         sock.close()
     except Exception as e:
         response_time = str(e)
-    return response_time
+        return response_time
 
 def mini_ddos():
     print_feature_header("Mini DDOS Attack")
