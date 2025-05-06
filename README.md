@@ -10,26 +10,26 @@ To run the toolkit:
 
 1. Clone the repository:
 
-    ```bash
+    ```cmd
     git clone git@gitlab.ti.howest.be:ti/2024-2025/s2/scripting-and-code-analysis/projects/rene-ruts/my-project.git
     ```
 
 2. Navigate to the project directory:
 
-    ```bash
+    ```cmd
     cd my-project
     ```
 
 3. Install the required libraries:
 
-    ```bash
+    ```cmd
     pip install -r requirements.txt
     ```
 
     > **Note:** Some features may require additional system dependencies. Ensure you have the necessary permissions and libraries installed.
 4. Run the main script:
 
-    ```bash
+    ```cmd
     python src\main.py
     ```
 
