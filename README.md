@@ -1,6 +1,6 @@
 # Python Toolkit - SACA
 
-Welcome to the **Python Toolkit** — a powerful suite of tools for network operations, security testing, file management, and data manipulation. Below is an overview of each feature, in the same order as the toolkit's main menu.
+Welcome to the **Python Toolkit - SACA** — a powerful suite of tools for network operations, security testing, file management, and data manipulation. Below is an overview of each feature, in the same order as the toolkit's main menu.
 
 ---
 
@@ -167,3 +167,5 @@ Scan directories for files matching a specific pattern and simulate sending an e
   - `glob` and `fnmatch` scan recursively for matching files.
   - `email.mime` constructs the report.
   - `http.client` is used to simulate HTTP status reporting for email operations.
+
+_There is an easter egg hidden in the code! Have Fun!_
