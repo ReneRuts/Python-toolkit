@@ -7,7 +7,7 @@ from service_comparator import main as service_comparator
 from mini_ddos import main as mini_ddos
 from remote_command_executor import main as remote_command_executor
 from password_tools import main as password_tools
-# from data_hider import main as data_hider
+from data_hider import main as data_hider
 # from file_scanner import main as file_scanner
 # from file_encryption import main as file_encryption
 
@@ -52,8 +52,7 @@ def main():
             elif choice == 6:
                 password_tools()
             elif choice == 7:
-                #data_hider()
-                print("\n[Info] Data Hider feature is not yet implemented.")
+                data_hider()
             elif choice == 8:
                 #file_encryption()
                 print("\n[Info] File Encryption & Decryption feature is not yet implemented.")
@@ -64,7 +63,7 @@ def main():
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
             elif choice == 11:
-                webbrowser.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+                webbrowser.open("https://www.youtube.com/watch?v=hvL1339luv0")
             else:
                 print("\n[Error] Invalid option. Please try again!\n")
                 sleep(2)
