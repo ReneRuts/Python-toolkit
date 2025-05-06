@@ -6,7 +6,7 @@ email
 fnmatch
 glob
 http
-image_viewer
+image_viewer => isn't needed anymore, but used cv2 instead :D
 itertools
 json
 os
