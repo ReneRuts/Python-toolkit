@@ -25,6 +25,7 @@ def generate_password(length=None):
 
     if not char_groups:
         print("[Error] No character types enabled.")
+        sleep(2)
         return None
 
     required_chars = [random.choice(group) for group in char_groups]
@@ -98,6 +99,8 @@ def modify_config():
     length_input = input(f"Enter password length (current: {config.PASS_LENGTH}): ").strip()
     if length_input.isdigit():
         length = int(length_input)
+    else: 
+        length = config.PASS_LENGTH
     if length <= 3:
         print("[Error] Password length should be at least 4.")
         length = 4
