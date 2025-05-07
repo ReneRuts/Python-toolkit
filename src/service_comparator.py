@@ -73,12 +73,16 @@ def config_menu():
     print("----------------------------------")
     choice = input("Select an option (0-3): ").strip()
     if choice == "0":
-        new_max_hosts = input(f"Enter new MAX_HOSTS value (Current: {config.MAX_HOSTS}, \"quit\" to keep): ").strip()
+        new_max_hosts = input(f"Enter new MAX_HOSTS value (Current: {config.MAX_HOSTS} max=100, \"quit\" to keep): ").strip()
         if new_max_hosts == "quit":
             print("[Info] Keeping current MAX_HOSTS value.")
         new_max_hosts = int(new_max_hosts)
         if new_max_hosts < 1:
             print("[Error] Invalid value! Must be greater than 0.")
+        elif new_max_hosts == "" or not new_max_hosts.isdigit():
+            print("[Error] Invalid value! Must be a positive integer.")
+        elif new_max_hosts > 100:
+            print("[Error] Invalid value! Must be less than or equal to 100.")
         else:
             config.update_config(max_hosts=new_max_hosts)
             print(f"[Info] MAX_HOSTS updated to {config.MAX_HOSTS}.")
@@ -86,6 +90,13 @@ def config_menu():
         new_ports = input(f"Enter new DEFAULT_PORTS separated by a comma, (Current: {config.DEFAULT_PORTS}, \"quit\" to keep): ").strip()
         if new_ports == "quit":
             print("[Info] Keeping current DEFAULT_PORTS value.")
+        elif new_ports == "" or len(new_ports.split(",")) == 0:
+            print("[Error] Invalid value! Must be a comma-separated list of ports.")
+        elif not all(port.strip().isdigit() for port in new_ports.split(",")):
+            print("[Error] Invalid value! Must be a comma-separated list of ports.")
+        elif new_ports == "all":
+            config.update_config(default_ports=[i for i in range(1, 65536)])
+            print(f"[Info] DEFAULT_PORTS updated to all ports (1-65535).")
         else:
             new_ports_list = [int(port.strip()) for port in new_ports.split(",") if port.strip().isdigit()]
             config.update_config(default_ports=new_ports_list)

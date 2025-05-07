@@ -65,19 +65,30 @@ def config_menu():
     choice = input("Select an option (0-5): ").strip()
     if choice == "0":
         new_threads = int(input(f"Enter new MAX_THREADS (Current: {config.MAX_THREADS}): ").strip())
+        if new_threads == "" or 0 >= new_threads <= 50:
+            new_threads = "5" 
+            print("[Info] The MAX_THREADS must be between 0 and 100")
         config.update_config(max_threads=new_threads)
         print(f"[Info] MAX_THREADS updated to {new_threads}.")
     elif choice == "1":
         new_rate = int(input(f"Enter new REQUEST_RATE (Current: {config.REQUEST_RATE}): ").strip())
+        if new_rate == "" or 0 >= new_rate <= 100:
+            new_rate = "5" 
+            print("[Info] The REQUEST_RATE must be between 0 and 100")
         config.update_config(request_rate=new_rate)
         print(f"[Info] REQUEST_RATE updated to {new_rate}.")
     elif choice == "2":
         new_payload = int(input(f"Enter new PAYLOAD_SIZE (Current: {config.PAYLOAD_SIZE}): ").strip())
+        if new_payload == "" or 0 >= new_payload <= 10000:
+            new_paylaod = "5" 
+            print("[Info] The paylaod_size must be between 0 and 10000")
         config.update_config(payload_size=new_payload)
         print(f"[Info] PAYLOAD_SIZE updated to {new_payload}.")
     elif choice == "3":
         new_host = input(f"Enter new TARGET_HOST (Current: {config.TARGET_HOST}): ").strip()
         new_port = int(input(f"Enter new TARGET_PORT (Current: {config.TARGET_PORT}): ").strip())
+        if new_host == "" or len(new_host) < 8: new_host = "127.0.0.1"
+        if new_port == "": new_port = "80"
         config.update_config(target_host=new_host, target_port=new_port)
         print(f"[Info] TARGET_HOST updated to {new_host} and TARGET_PORT updated to {new_port}.")
     elif choice == "4":

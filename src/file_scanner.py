@@ -1,6 +1,7 @@
 import glob
 import fnmatch
 import http.client
+import re
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -86,7 +87,11 @@ def smart_file_scanner_and_email_reporter():
     print("[Info] Generating report...")
     report = generate_report(directory, pattern, matching_files)
 
-    to_email = input("Enter the email address to send the report to: ").strip()
+    while True:
+        to_email = input("Enter the email address to send the report to: ").strip()
+        if is_email(to_email):
+            break
+
 
     attach_files = input("Do you want to attach the found files in the email? (y/n): ").strip().lower()
     attachments = matching_files if attach_files == "y" else None
@@ -96,6 +101,10 @@ def smart_file_scanner_and_email_reporter():
         show_email_summary("Smart File Scanner Report", report, attachments)
 
     send_email("Smart File Scanner Report", report, to_email, attachments)
+
+def is_email(mail):
+    pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    return True if re.match(pattern, mail) is not None else False
 
 def display_info():
     print_feature_header("Smart File Scanner & Email Reporter Info")
