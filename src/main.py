@@ -34,16 +34,17 @@ def main():
     while True:
         try:
             print_menu()
-            selected_option = input("Select an option (1-10): ").strip()
+            selected_option = input("Select an option (0-10): ").strip()
             try:
                 choice = int(selected_option)
             except ValueError:
-                print("\n[Error] Invalid input. Please enter a number between 1 and 10.")
+                print("\n[Error] Invalid input. Please enter a number between 0 and 10.")
                 sleep(2) # Add a delay before showing the menu again
                 continue
             if choice == 0:
                 config.show_config(mode="all")
                 input("Press Enter to continue...")
+                continue
             if choice == 1:
                 mac_spoofing()
             elif choice == 2:
