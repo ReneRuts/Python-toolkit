@@ -90,7 +90,11 @@ def modify_config():
     symbols = ask_bool("Include symbols", config.PASS_INCLUDE_SYMBOLS)
 
     length_input = input(f"Enter password length (current: {config.PASS_LENGTH}): ").strip()
-    length = int(length_input) if length_input.isdigit() else config.PASS_LENGTH
+    if length_input.isdigit():
+        length = int(length_input)
+    if length <= 3:
+        print("[Error] Password length should be at least 4.")
+        length = 4
 
     config.update_config(
         pass_lower=lower,
