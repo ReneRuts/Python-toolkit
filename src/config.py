@@ -1,4 +1,5 @@
 from pathlib import Path
+from util import print_feature_header
 class Config:
     def __init__(self):
         # Service comparator settings
@@ -60,10 +61,12 @@ class Config:
         print("\n[Current Configuration]")
 
         if mode == "all" or mode == "service_comparator":
+            print_feature_header("Service Comparator")
             print(f"Max Hosts: {self.MAX_HOSTS}")
             print(f"Default Ports: {self.DEFAULT_PORTS}")
 
         if mode == "all" or mode == "mini_ddos":
+            print_feature_header("Mini DDOS")
             print(f"Max Threads: {self.MAX_THREADS}")
             print(f"Request Rate: {self.REQUEST_RATE}")
             print(f"Payload Size: {self.PAYLOAD_SIZE}")
@@ -71,6 +74,7 @@ class Config:
             print(f"Target Port: {self.TARGET_PORT}")
 
         if mode == "all" or mode == "password":
+            print_feature_header("Password Generator & Strength Analyzer")
             print(f"Include Lowercase: {self.PASS_INCLUDE_LOWER}")
             print(f"Include Uppercase: {self.PASS_INCLUDE_UPPER}")
             print(f"Include Digits: {self.PASS_INCLUDE_DIGITS}")

@@ -1,6 +1,7 @@
 import webbrowser
 import sys
 from time import sleep
+from config import config
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
 from service_comparator import main as service_comparator
@@ -15,6 +16,7 @@ def print_menu():
     print("----------------------------------")
     print("--- Python Toolkit - Main Menu ---")
     print("----------------------------------")
+    print("0. Show Configuration")
     print("1. MAC spoofing")  # Scapy, OS
     print("2. WEB scraping")  # Requests, BeautifulSoup, Selenium
     print("3. Service Comparator")  # Socket, Paramiko, JSON
@@ -39,6 +41,9 @@ def main():
                 print("\n[Error] Invalid input. Please enter a number between 1 and 10.")
                 sleep(2) # Add a delay before showing the menu again
                 continue
+            if choice == 0:
+                config.show_config(mode="all")
+                input("Press Enter to continue...")
             if choice == 1:
                 mac_spoofing()
             elif choice == 2:
