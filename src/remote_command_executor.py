@@ -1,9 +1,8 @@
 import paramiko
 import subprocess
+import sys
 from util import print_feature_header
 from time import sleep
-import argparse
-import sys
 
 def remote_execute_command(host, username, password, command):
     try:
@@ -51,7 +50,7 @@ def display_info():
     print("-" * 40)
     input("Press Enter to continue...")
 
-def interactive_menu():
+def main():
     while True:
         try:
             print_feature_header("Remote Command Executor")
@@ -85,24 +84,6 @@ def interactive_menu():
         except KeyboardInterrupt:
             print("\n[Warning] Please use option 3 to exit!\n")
             sleep(2)
-
-def cli_mode():
-    parser = argparse.ArgumentParser(description="Remote Command Executor via SSH")
-    parser.add_argument("--host", required=True, help="Remote host IP or domain")
-    parser.add_argument("--username", required=True, help="SSH username")
-    parser.add_argument("--password", required=True, help="SSH password")
-    parser.add_argument("--command", required=True, help="Shell command to execute remotely")
-
-    args = parser.parse_args()
-
-    remote_execute_command(args.host, args.username, args.password, args.command)
-
-def main():
-    # If script is run with arguments, use CLI mode
-    if len(sys.argv) > 1:
-        cli_mode()
-    else:
-        interactive_menu()
 
 if __name__ == "__main__":
     main()
