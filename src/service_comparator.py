@@ -33,6 +33,11 @@ def compare_services():
     print_feature_header("Service Comparator")
     try:
         num_hosts = int(input(f"Enter the number of hosts to compare (1 - {config.MAX_HOSTS}): ").strip())
+        if num_hosts.isdigit():
+            num_hosts = int(num_hosts)
+        else:
+            print(f"[Error] Invalid input! Please enter a number.")
+            return
         if num_hosts < 1 or num_hosts > config.MAX_HOSTS:
             print(f"[Error] Invalid number! Only 1 - {config.MAX_HOSTS} hosts supported.")
             return
@@ -76,11 +81,12 @@ def config_menu():
         new_max_hosts = input(f"Enter new MAX_HOSTS value (Current: {config.MAX_HOSTS} max=100, \"quit\" to keep): ").strip()
         if new_max_hosts == "quit":
             print("[Info] Keeping current MAX_HOSTS value.")
-        new_max_hosts = int(new_max_hosts)
-        if new_max_hosts < 1:
-            print("[Error] Invalid value! Must be greater than 0.")
         elif new_max_hosts == "" or not new_max_hosts.isdigit():
             print("[Error] Invalid value! Must be a positive integer.")
+        else: 
+            new_max_hosts = int(new_max_hosts)
+        if new_max_hosts < 1:
+            print("[Error] Invalid value! Must be greater than 0.")
         elif new_max_hosts > 100:
             print("[Error] Invalid value! Must be less than or equal to 100.")
         else:
