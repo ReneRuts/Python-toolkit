@@ -85,7 +85,7 @@ def display_info():
 
 def main():
     while True:
-        print("\n--- Data -> Image Hider ---")
+        print_feature_header("Data -> Image Hider")
         print("0. Get info about this feature")
         print("1. Hide data in image")
         print("2. Extract data from image")

@@ -19,7 +19,7 @@ def fetch_services_via_ssh(host, username, password):
     try:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(host, username, password, timeout=5)
+        ssh.connect(hostname=host, username=username, password=password, timeout=5)
         stdin, stdout, stderr = ssh.exec_command("systemctl list-units --type=service")
         for line in stdout.readlines():
             if ".service" in line:
@@ -32,14 +32,14 @@ def fetch_services_via_ssh(host, username, password):
 def compare_services():
     print_feature_header("Service Comparator")
     try:
-        num_hosts = int(input(f"Enter the number of hosts to compare (1 - {config.MAX_HOSTS}): ").strip())
+        num_hosts = input(f"Enter the number of hosts to compare (2 - {config.MAX_HOSTS}): ").strip()
         if num_hosts.isdigit():
             num_hosts = int(num_hosts)
         else:
             print(f"[Error] Invalid input! Please enter a number.")
             return
-        if num_hosts < 1 or num_hosts > config.MAX_HOSTS:
-            print(f"[Error] Invalid number! Only 1 - {config.MAX_HOSTS} hosts supported.")
+        if num_hosts < 2 or num_hosts > config.MAX_HOSTS:
+            print(f"[Error] Invalid number! Only 2 - {config.MAX_HOSTS} hosts supported.")
             return
     except ValueError:
         print("[Error] Please enter a valid number.")
@@ -49,6 +49,11 @@ def compare_services():
     for i in range(num_hosts):
         print(f"\nHost {i+1}:")
         host = input("Enter the host IP or domain: ").strip()
+        try:
+            socket.getaddrinfo(host, 22)
+        except socket.gaierror as e:
+            print(f"[Error] Invalid host '{host}': {e}")
+            continue
         username = input("Enter the SSH username: ").strip()
         password = input("Enter the SSH password: ").strip()
 
