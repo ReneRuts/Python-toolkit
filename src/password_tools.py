@@ -13,23 +13,29 @@ def generate_password(length=None):
         print("[Error] Password length should be at least 4.")
         return None
 
-    charset = []
+    char_groups = []
     if config.PASS_INCLUDE_LOWER:
-        charset.append("abcdefghijklmnopqrstuvwxyz")
+        char_groups.append("abcdefghijklmnopqrstuvwxyz")
     if config.PASS_INCLUDE_UPPER:
-        charset.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        char_groups.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     if config.PASS_INCLUDE_DIGITS:
-        charset.append("0123456789")
+        char_groups.append("0123456789")
     if config.PASS_INCLUDE_SYMBOLS:
-        charset.append("!@#$%^&*()-_=+[]{}|;:',.<>?/")
+        char_groups.append("!@#$%^&*()-_=+[]{}|;:',.<>?/")
 
-    if not charset:
+    if not char_groups:
         print("[Error] No character types enabled.")
         return None
 
-    flat_charset = ''.join(charset)
-    password = ''.join(random.choice(flat_charset) for _ in range(length))
-    return password
+    required_chars = [random.choice(group) for group in char_groups]
+    remaining_length = length - len(required_chars)
+    flat_charset = ''.join(itertools.chain.from_iterable(char_groups))
+    remaining_chars = [random.choice(flat_charset) for _ in range(remaining_length)]
+
+    password_chars = required_chars + remaining_chars
+    random.shuffle(password_chars)
+    return ''.join(password_chars)
+
 
 
 def analyze_strength(password):
