@@ -22,7 +22,6 @@ def get_current_mac(interface):
 def generate_random_mac():
     return str(RandMAC())
 
-# Check if it's a valid MAC address format.
 def is_valid_mac(mac):
     pattern = r"([0-9a-f-A-F]{2}:){5}[0-9a-f-A-F]{2}"
     return True if re.match(pattern, mac) else False
@@ -46,7 +45,6 @@ def change_mac_address(interface, new_mac):
     except Exception as e:
         print(f"[Error] Could not change MAC address: {e}")
 
-# Start the MAC Spoofing process.
 def mac_spoofing():
     interface = input("Enter the network interface (e.g., eth0, wlan0): ").strip()
     choice = input("Generate a random MAC address? (y/n): ").strip().lower()
@@ -56,7 +54,6 @@ def mac_spoofing():
     else:
         print("[Error] Invalid MAC address format.")
 
-# Display information about the MAC Spoofing feature.
 def display_info():
     print_feature_header("MAC Spoofing")
     print("\n- MAC Spoofing allows you to change your device's MAC address.")

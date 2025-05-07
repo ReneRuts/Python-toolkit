@@ -1,6 +1,8 @@
 import webbrowser
 import sys
+import argparse
 from time import sleep
+from config import config
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
 from service_comparator import main as service_comparator
@@ -15,6 +17,7 @@ def print_menu():
     print("----------------------------------")
     print("--- Python Toolkit - Main Menu ---")
     print("----------------------------------")
+    print("0. Show Configuration")
     print("1. MAC spoofing")  # Scapy, OS
     print("2. WEB scraping")  # Requests, BeautifulSoup, Selenium
     print("3. Service Comparator")  # Socket, Paramiko, JSON
@@ -27,17 +30,49 @@ def print_menu():
     print("10. Exit")
     print("----------------------------------")
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Python Toolkit - SACA: A multifunctional toolkit for networking, security, and automation.",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+
+    parser.add_argument(
+        "--tool", "-t",
+        type=int,
+        choices=range(0, 11),
+        metavar="[0-10]",
+        help=(
+            "Directly run a specific tool without the interactive menu:\n"
+            " 0 = Show Configuration\n"
+            " 1 = MAC Spoofing\n"
+            " 2 = Web Scraping\n"
+            " 3 = Service Comparator\n"
+            " 4 = Mini DDOS Attack\n"
+            " 5 = Remote Command Executor\n"
+            " 6 = Password Generator & Strength Analyzer\n"
+            " 7 = Data -> Image Hider\n"
+            " 8 = Secure File Encryption & Decryption\n"
+            " 9 = Smart File Scanner & Email Reporter"
+        )
+    )
+
+    return parser.parse_args()
+
 # The main program is run here using an interactive menu.
 def main():
     while True:
         try:
             print_menu()
-            selected_option = input("Select an option (1-10): ").strip()
+            selected_option = input("Select an option (0-10): ").strip()
             try:
                 choice = int(selected_option)
             except ValueError:
-                print("\n[Error] Invalid input. Please enter a number between 1 and 10.")
+                print("\n[Error] Invalid input. Please enter a number between 0 and 10.")
                 sleep(2) # Add a delay before showing the menu again
+                continue
+            if choice == 0:
+                config.show_config(mode="all")
+                input("Press Enter to continue...")
                 continue
             if choice == 1:
                 mac_spoofing()
@@ -61,8 +96,7 @@ def main():
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
             elif choice == 11:
-                print("\n[Easter Egg] You found the secret option!")
-                webbrowser.open("https://www.youtube.com/watch?v=hvL1339luv0")
+                easterEgg()
             else:
                 print("\n[Error] Invalid option. Please try again!\n")
                 sleep(2)
@@ -75,6 +109,26 @@ def main():
             print("\n[Unexpected Error] Something went wrong:")
             print(f"Error Message: {e}\n")
             print("Restarting menu...\n")
+def easterEgg():
+    print("\n[Easter Egg] You found the secret option!")
+    webbrowser.open("https://www.youtube.com/watch?v=xvFZjo5PgG0")
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    if args.tool is not None:
+        tools = [
+            lambda: config.show_config(mode="all"),
+            mac_spoofing,
+            web_scraping,
+            service_comparator,
+            mini_ddos,
+            remote_command_executor,
+            password_tools,
+            data_hider,
+            file_encryption,
+            file_scanner,
+            easterEgg
+        ]
+        tools[args.tool]()
+    else:
+        main()

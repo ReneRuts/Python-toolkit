@@ -1,9 +1,8 @@
 import paramiko
 import subprocess
+import sys
 from util import print_feature_header
 from time import sleep
-import argparse
-import sys
 
 def remote_execute_command(host, username, password, command):
     try:
@@ -12,23 +11,35 @@ def remote_execute_command(host, username, password, command):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(host, username=username, password=password, timeout=5)
 
-        print(f"[Info] Executing command: {command}")
+        print(f"[Info] Executing command remotely: {command}")
         stdin, stdout, stderr = ssh.exec_command(command)
-        
+
         output = stdout.read().decode()
         errors = stderr.read().decode()
         ssh.close()
 
         if output:
-            print("\n[Output]:")
+            print("\n[Remote Output]:")
             print(output)
         if errors:
-            print("\n[Errors]:")
+            print("\n[Remote Errors]:")
             print(errors)
         if not output and not errors:
             print("\n[Info] Command executed with no output.")
+
+        run_local = input("\nDo you want to run this command locally too? (y/n): ").strip().lower()
+        if run_local == 'y':
+            print("\n[Info] Executing command locally...")
+            try:
+                local_result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
+                print("\n[Local Output]:")
+                print(local_result.stdout)
+            except subprocess.CalledProcessError as e:
+                print("\n[Local Error]:")
+                print(e.stderr)
     except Exception as e:
-        print(f"[Error] Failed to execute command: {e}")
+        print(f"[Error] Failed to execute remote command: {e}")
+
 
 def display_info():
     print_feature_header("Remote Command Executor")
@@ -39,7 +50,7 @@ def display_info():
     print("-" * 40)
     input("Press Enter to continue...")
 
-def interactive_menu():
+def main():
     while True:
         try:
             print_feature_header("Remote Command Executor")
@@ -73,24 +84,6 @@ def interactive_menu():
         except KeyboardInterrupt:
             print("\n[Warning] Please use option 3 to exit!\n")
             sleep(2)
-
-def cli_mode():
-    parser = argparse.ArgumentParser(description="Remote Command Executor via SSH")
-    parser.add_argument("--host", required=True, help="Remote host IP or domain")
-    parser.add_argument("--username", required=True, help="SSH username")
-    parser.add_argument("--password", required=True, help="SSH password")
-    parser.add_argument("--command", required=True, help="Shell command to execute remotely")
-
-    args = parser.parse_args()
-
-    remote_execute_command(args.host, args.username, args.password, args.command)
-
-def main():
-    # If script is run with arguments, use CLI mode
-    if len(sys.argv) > 1:
-        cli_mode()
-    else:
-        interactive_menu()
 
 if __name__ == "__main__":
     main()

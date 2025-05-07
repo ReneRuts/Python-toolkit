@@ -21,7 +21,12 @@ def mini_ddos():
     print_feature_header("Mini DDOS Attack")
 
     try:
-        num_threads = int(input(f"Enter the number of threads (1 - {config.MAX_THREADS}): ").strip())
+        num_threads = input(f"Enter the number of threads (1 - {config.MAX_THREADS}): ").strip()
+        if num_threads.isdigit():
+            num_threads = int(num_threads)
+        else:
+            print(f"[Error] Invalid input! Please enter a number.")
+            return
         if num_threads < 1 or num_threads > config.MAX_THREADS:
             print(f"[Error] Invalid number! Must be between 1 and {config.MAX_THREADS}.")
             return
@@ -64,20 +69,46 @@ def config_menu():
     print("----------------------------------")
     choice = input("Select an option (0-5): ").strip()
     if choice == "0":
-        new_threads = int(input(f"Enter new MAX_THREADS (Current: {config.MAX_THREADS}): ").strip())
+        new_threads = input(f"Enter new MAX_THREADS (Current: {config.MAX_THREADS}): ").strip()
+        if new_threads.isdigit():
+            new_threads = int(new_threads)
+        else:
+            new_threads = 10
+        if new_threads == "" or 0 >= new_threads <= 50:
+            new_threads = "5" 
+            print("[Info] The MAX_THREADS must be between 0 and 100")
         config.update_config(max_threads=new_threads)
         print(f"[Info] MAX_THREADS updated to {new_threads}.")
     elif choice == "1":
-        new_rate = int(input(f"Enter new REQUEST_RATE (Current: {config.REQUEST_RATE}): ").strip())
+        new_rate = input(f"Enter new REQUEST_RATE (Current: {config.REQUEST_RATE}): ").strip()
+        if new_rate.isdigit():
+            new_rate = int(new_rate)
+        else:
+            new_rate = 5
+        if new_rate == "" or 0 >= new_rate <= 100:
+            new_rate = "5" 
+            print("[Info] The REQUEST_RATE must be between 0 and 100")
         config.update_config(request_rate=new_rate)
         print(f"[Info] REQUEST_RATE updated to {new_rate}.")
     elif choice == "2":
-        new_payload = int(input(f"Enter new PAYLOAD_SIZE (Current: {config.PAYLOAD_SIZE}): ").strip())
+        new_payload = input(f"Enter new PAYLOAD_SIZE (Current: {config.PAYLOAD_SIZE}): ").strip()
+        if new_payload.isdigit():
+            new_payload = int(new_payload)
+        else:
+            new_payload = 5
+        if new_payload == "" or 0 >= new_payload <= 10000:
+            new_payload = "5" 
+            print("[Info] The payload_size must be between 0 and 10000")
         config.update_config(payload_size=new_payload)
         print(f"[Info] PAYLOAD_SIZE updated to {new_payload}.")
     elif choice == "3":
         new_host = input(f"Enter new TARGET_HOST (Current: {config.TARGET_HOST}): ").strip()
-        new_port = int(input(f"Enter new TARGET_PORT (Current: {config.TARGET_PORT}): ").strip())
+        new_port = input(f"Enter new TARGET_PORT (Current: {config.TARGET_PORT}): ").strip()
+        if new_port.isdigit():
+            new_port = int(new_port)
+        else:
+            new_port = 80
+        if new_host == "" or len(new_host) < 8: new_host = "127.0.0.1"
         config.update_config(target_host=new_host, target_port=new_port)
         print(f"[Info] TARGET_HOST updated to {new_host} and TARGET_PORT updated to {new_port}.")
     elif choice == "4":
