@@ -1,4 +1,3 @@
-import base64
 from src.data_hider import encode_text_base64, decode_text_base64, hide_data, extract_hidden_data
 
 
