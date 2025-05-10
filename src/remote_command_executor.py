@@ -1,6 +1,5 @@
 import paramiko
 import subprocess
-import sys
 from util import print_feature_header
 from time import sleep
 
