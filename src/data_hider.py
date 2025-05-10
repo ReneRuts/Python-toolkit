@@ -1,4 +1,3 @@
-import os
 import cv2
 import base64
 from stegano import lsb
@@ -22,11 +21,11 @@ def hide_data_in_image():
 
     data_to_hide = input("Enter the data you want to hide in the image: ").strip()
 
-    # Hide data using LSB (Least Significant Bit) encoding
+    # Hide data using the hide_data function (refactored to use hide_data function)
     output_image_path = OUTPUT_DIR / f"hidden_{image_path.name}"
     print("[Info] Hiding data in the image...")
     sleep(2)
-    lsb.hide(str(image_path), data_to_hide).save(output_image_path)
+    hide_data(str(image_path), data_to_hide, str(output_image_path))
 
     print(f"[Info] Data successfully hidden. Saved to {output_image_path}")
 
@@ -47,7 +46,8 @@ def extract_data_from_image():
         print("[Error] The image file does not exist.")
         return
 
-    hidden_data = lsb.reveal(str(image_path))
+    # Extract data using the extract_hidden_data function (refactored to use extract_hidden_data function)
+    hidden_data = extract_hidden_data(str(image_path))
 
     if hidden_data:
         print(f"[Info] Extracted Data: {hidden_data}")
@@ -59,7 +59,8 @@ def encode_data_in_base64():
 
     data = input("Enter the data to encode: ").strip()
 
-    encoded_data = base64.b64encode(data.encode('utf-8')).decode('utf-8')
+    # Use encode_text_base64 function
+    encoded_data = encode_text_base64(data)
 
     print(f"[Info] Encoded Data: {encoded_data}")
     return encoded_data
@@ -70,7 +71,8 @@ def decode_data_from_base64():
     encoded_data = input("Enter the Base64 encoded data: ").strip()
 
     try:
-        decoded_data = base64.b64decode(encoded_data).decode('utf-8')
+        # Use decode_text_base64 function
+        decoded_data = decode_text_base64(encoded_data)
         print(f"[Info] Decoded Data: {decoded_data}")
     except Exception as e:
         print(f"[Error] Failed to decode Base64 data: {e}")
@@ -114,6 +116,21 @@ def main():
             exit(0)
         else:
             print("[Error] Invalid option. Please try again!")
+
+def encode_text_base64(data: str) -> str:
+    return base64.b64encode(data.encode('utf-8')).decode('utf-8')
+
+def decode_text_base64(encoded: str) -> str:
+    return base64.b64decode(encoded).decode('utf-8')
+
+def hide_data(image_path: str, data: str, output_path: str) -> str:
+    # Using lsb to hide data and save to the output path
+    lsb.hide(image_path, data).save(output_path)
+    return output_path
+
+def extract_hidden_data(image_path: str) -> str:
+    # Extract hidden data using lsb
+    return lsb.reveal(image_path)
 
 if __name__ == "__main__":
     main()
