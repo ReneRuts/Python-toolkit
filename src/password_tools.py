@@ -156,6 +156,8 @@ def main():
                 password = input("Enter password to hash: ").strip()
                 hashed = sha256_crypt.hash(password)
                 print(f"\nHashed Password: {hashed}")
+                salt_only = hashed.split('$')[3]
+                print(f"Salt: {salt_only}")
                 hash_only = hashed.split('$')[-1]
                 print(f"Raw Hash: {hash_only}")
 

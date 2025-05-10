@@ -170,4 +170,4 @@ Scan directories for files matching a specific pattern and simulate sending an e
 
 ---
 
-_There is an easter egg hidden in the code! Have Fun!_
+_There is an easter egg hidden in the program! Have Fun!_
