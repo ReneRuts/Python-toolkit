@@ -56,7 +56,7 @@ To run the toolkit:
 
 ### 1. MAC Spoofing
 
-**Libraries Used:** `scapy`, `os`
+**Libraries Used:** `scapy`, `os`, `re` & `time`
 
 Change the MAC address of your network interface card (NIC) to spoof or mask your device’s identity.
 
@@ -68,7 +68,7 @@ Change the MAC address of your network interface card (NIC) to spoof or mask you
 
 ### 2. WEB Scraping
 
-**Libraries Used:** `requests`, `BeautifulSoup`, `selenium`
+**Libraries Used:** `requests`,`re`, `time`, `BeautifulSoup` & `selenium`
 
 Scrape static and dynamic websites to extract data quickly and efficiently.
 
@@ -95,7 +95,7 @@ Scrape static and dynamic websites to extract data quickly and efficiently.
 
 ### 3. Service Comparator
 
-**Libraries Used:** `socket`, `paramiko`, `json`
+**Libraries Used:** `socket`, `paramiko`, `json`, `pathlib` & `time`
 
 Compare services and open ports on multiple remote hosts over SSH.
 
@@ -110,7 +110,7 @@ Compare services and open ports on multiple remote hosts over SSH.
 
 ### 4. Mini DDOS Attack
 
-**Libraries Used:** `threading`, `time`, `socket`, `sys`
+**Libraries Used:** `threading`, `time`, `socket` & `sys`
 
 A basic multithreaded tool to simulate a Distributed Denial of Service (DDoS) attack for educational or testing purposes.
 
@@ -124,7 +124,7 @@ A basic multithreaded tool to simulate a Distributed Denial of Service (DDoS) at
 
 ### 5. Remote Command Executor
 
-**Libraries Used:** `paramiko`, `subprocess`, `argparse`
+**Libraries Used:** `paramiko`, `subprocess` & `time`
 
 Execute shell commands remotely on Linux hosts over SSH.
 
@@ -140,7 +140,7 @@ Execute shell commands remotely on Linux hosts over SSH.
 
 ### 6. Password Generator & Strength Analyzer
 
-**Libraries Used:** `passlib`, `re`, `random`, `itertools`
+**Libraries Used:** `passlib`, `re`, `random`, `itertools` & `time`
 
 Generate secure passwords and analyze the strength of existing ones.
 
@@ -154,7 +154,7 @@ Generate secure passwords and analyze the strength of existing ones.
 
 ### 7. Data → Image Hider
 
-**Libraries Used:** `stegano`, `os`, `base64`, `image_viewer`
+**Libraries Used:** `stegano`, `pathlib`, `base64`, `time` & `cv2`
 
 Hide sensitive information inside image files using steganography.
 
@@ -167,7 +167,7 @@ Hide sensitive information inside image files using steganography.
 
 ### 8. Secure File Encryption & Decryption
 
-**Libraries Used:** `cryptography`, `pathlib`, `shutil`, `send2trash`, `datetime`
+**Libraries Used:** `cryptography`, `pathlib`, `shutil`, `send2trash` & `datetime`
 
 Encrypt and decrypt sensitive files with optional safe deletion.
 
@@ -181,7 +181,7 @@ Encrypt and decrypt sensitive files with optional safe deletion.
 
 ### 9. Smart File Scanner & Email Reporter
 
-**Libraries Used:** `email`, `fnmatch`, `glob`, `http`
+**Libraries Used:** `email`, `fnmatch`, `glob`, `http`, `re` & `pathlib`
 
 Scan directories for files matching a specific pattern and simulate sending an email report.
 
