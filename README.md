@@ -26,12 +26,17 @@ To run the toolkit:
     pip install -r requirements.txt
     ```
 
-    > **Note:** Some features may require additional system dependencies. Ensure you have the necessary permissions and libraries installed.
+    > **Note:** Some features may require additional system dependencies, such as `chromedriver` for Selenium or `scapy` for packet crafting. Ensure you have the necessary permissions and libraries installed.
+
 4. Run the main script:
 
     ```cmd
     python src\main.py
     ```
+
+    The main script serves as a menu for accessing each toolkit feature.
+
+---
 
 ## Main Menu
 
@@ -57,6 +62,7 @@ Change the MAC address of your network interface card (NIC) to spoof or mask you
 
 - **Use Case:** Evade MAC-based tracking, simulate device identities in test networks.
 - **How it Works:** Executes system-level MAC address changes, confirmed using Scapy’s packet inspection tools.
+- **Testability:** Functionality can be manually tested by observing changes in the system's MAC address post-execution.
 
 ---
 
@@ -68,9 +74,22 @@ Scrape static and dynamic websites to extract data quickly and efficiently.
 
 - **Use Case:** Automate data collection from websites, such as articles, product prices, or search results.
 - **How it Works:**
-  - `requests` retrieves HTML content.
-  - `BeautifulSoup` parses and extracts elements.
-  - `selenium` automates browsers to handle JavaScript-rendered pages.
+  - **Requests** retrieves HTML content for static websites.
+  - **BeautifulSoup** parses the HTML to extract key elements such as the page title and headers.
+  - **Selenium** automates browsers to handle JavaScript-rendered pages that may require dynamic content loading.
+  
+  **Tested Features:**
+  - URL validation (`is_valid_url`).
+  - HTML content fetching (`fetch_html`).
+  - Parsing and extracting data (`parse_html`).
+  - Full scraping using Requests and Selenium.
+
+- **Test Example:**
+  - We validate the URL format using regex to ensure it's in the correct format.
+  - The `fetch_html` function is tested by confirming that HTML content is returned and contains an `<html>` tag.
+  - The `parse_html` function is tested by confirming that the extracted title and headers match expected content.
+
+  Full tests are available in `test_web_scraping.py` to verify correct operation.
 
 ---
 
@@ -82,9 +101,10 @@ Compare services and open ports on multiple remote hosts over SSH.
 
 - **Use Case:** System administrators can compare active services across servers for consistency or troubleshooting.
 - **How it Works:**
-  - SSH connection established using `paramiko`.
-  - Services fetched with `systemctl list-units`.
-  - Ports scanned using `socket` and results saved in JSON.
+  - Establishes an SSH connection using `paramiko`.
+  - Fetches running services with `systemctl list-units` (or equivalent).
+  - Scans open ports using `socket`.
+  - Outputs the results in a JSON format for easy comparison.
 
 ---
 
@@ -96,8 +116,9 @@ A basic multithreaded tool to simulate a Distributed Denial of Service (DDoS) at
 
 - **Use Case:** Simulate simple denial-of-service behavior in controlled environments.
 - **How it Works:**
-  - Spawns threads to send continuous socket requests to a target.
-  - Delay and thread count customizable.
+  - Spawns multiple threads that continuously send socket requests to a target.
+  - Thread count and delay between requests are customizable via user input.
+  - It's important to use this tool responsibly and only in test environments.
 
 ---
 
@@ -109,9 +130,11 @@ Execute shell commands remotely on Linux hosts over SSH.
 
 - **Use Case:** Run diagnostics, gather logs, or automate tasks across multiple remote servers.
 - **How it Works:**
-  - `paramiko` manages SSH connection.
-  - Commands executed via remote shell, results displayed to the user.
-  - CLI options handled with `argparse`.
+  - Uses `paramiko` to manage SSH connections.
+  - Executes commands via the remote shell, capturing and displaying results.
+  - Command execution is done in real-time with options to execute locally after remote execution.
+
+- **Testability:** Manual tests can be run by providing valid credentials and confirming the output of commands executed on remote systems.
 
 ---
 
@@ -123,9 +146,9 @@ Generate secure passwords and analyze the strength of existing ones.
 
 - **Use Case:** Improve security hygiene by ensuring strong, unique passwords.
 - **How it Works:**
-  - Uses `random` and `itertools` to construct complex passwords.
-  - Regex and entropy-based strength checks.
-  - `passlib` used for secure hashing or further analysis.
+  - Uses `random` and `itertools` to construct complex passwords that include uppercase letters, numbers, and symbols.
+  - Password strength is determined using regex checks and entropy-based analysis, including checks for length and complexity.
+  - `passlib` can be used for secure password hashing.
 
 ---
 
@@ -137,8 +160,8 @@ Hide sensitive information inside image files using steganography.
 
 - **Use Case:** Securely embed data within images for discreet data transfer or storage.
 - **How it Works:**
-  - `stegano` hides base64-encoded data within PNG files.
-  - Files can be extracted and verified using the same module.
+  - `stegano` embeds base64-encoded data inside PNG image files.
+  - Files can be extracted and verified using the same module, making it possible to securely hide and retrieve sensitive information.
 
 ---
 
@@ -150,9 +173,9 @@ Encrypt and decrypt sensitive files with optional safe deletion.
 
 - **Use Case:** Protect confidential files with AES encryption.
 - **How it Works:**
-  - Encrypts files using `Fernet` from the `cryptography` library.
-  - Encrypted files saved to a dedicated output directory.
-  - Old files optionally moved to trash using `send2trash`.
+  - Uses `Fernet` from the `cryptography` library to encrypt files.
+  - Encrypted files are saved in a secure directory for easy management.
+  - Optional functionality to move old files to trash using `send2trash`.
 
 ---
 
@@ -164,9 +187,9 @@ Scan directories for files matching a specific pattern and simulate sending an e
 
 - **Use Case:** Identify specific file types (e.g., `.log`, `.txt`) and generate searchable reports.
 - **How it Works:**
-  - `glob` and `fnmatch` scan recursively for matching files.
-  - `email.mime` constructs the report.
-  - `http.client` is used to simulate HTTP status reporting for email operations.
+  - Scans directories using `glob` and `fnmatch` to locate files matching a pattern.
+  - Constructs email reports with `email.mime`.
+  - Uses `http.client` to simulate HTTP status reporting during email operations.
 
 ---
 

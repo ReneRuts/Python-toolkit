@@ -9,5 +9,5 @@ __pycache__/
 # Ignore virtual environment
 .venv/
 
-# Ignore output files
+# Ignore output files so users output isn't getting added
 output/
