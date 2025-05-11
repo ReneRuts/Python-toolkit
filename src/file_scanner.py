@@ -103,7 +103,7 @@ def smart_file_scanner_and_email_reporter():
     send_email("Smart File Scanner Report", report, to_email, attachments)
 
 def is_email(mail):
-    pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$"
     return True if re.match(pattern, mail) is not None else False
 
 def display_info():
