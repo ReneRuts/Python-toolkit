@@ -6,7 +6,6 @@ from passlib.hash import sha256_crypt
 from config import config
 from util import print_feature_header
 
-
 def generate_password(length=None):
     length = length or config.PASS_LENGTH
     if length < 4:
