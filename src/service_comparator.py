@@ -44,7 +44,9 @@ def collect_host_data(num_hosts):
             continue
         username = input("Enter the SSH username: ").strip()
         password = input("Enter the SSH password: ").strip()
-
+        print("[Info] Setting up the ssh connection....")
+        sleep(0.5)
+        print("[Info] Fetching services and collecting open ports. Please wait..")
         services = fetch_services_via_ssh(host, username, password)
         open_ports = {port: check_port(host, port) for port in config.DEFAULT_PORTS}
         host_data.append({
@@ -52,6 +54,7 @@ def collect_host_data(num_hosts):
             "services": sorted(set(services)),
             "open_ports": open_ports
         })
+        print("[Info] Done fetching services and collecting ports.")
     return host_data
 
 
