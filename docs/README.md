@@ -20,19 +20,37 @@ To run the toolkit:
     cd my-project
     ```
 
-3. Install the required libraries:
+3. Create a Virtual Environment & Install the required libraries:
 
     ```cmd
+    python -m venv .venv
+    .\.venv\Scripts\activate
     pip install -r requirements.txt
     ```
 
-    > **Note:** Some features may require additional system dependencies, such as `chromedriver` for Selenium or `scapy` for packet crafting. Ensure you have the necessary permissions and libraries installed.
+    > **Note:** Some features may require additional system dependencies, such as `chromedriver` for Selenium. Ensure you have the necessary permissions.
 
 4. Run the main script:
 
-    ```cmd
-    python src\main.py
-    ```
+    1. Through python
+
+          ```cmd
+          python src\main.py
+          ```
+
+    2. Through arguments
+
+          Get help.
+
+          ```cmd
+          python src\main.py --help
+          ```
+
+          Run a tool.
+
+          ```cmd
+          python src\main.py --tool [1-10]
+          ```
 
     The main script serves as a menu for accessing each toolkit feature.
 
