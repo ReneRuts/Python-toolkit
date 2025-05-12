@@ -39,8 +39,8 @@ def parse_args():
     parser.add_argument(
         "--tool", "-t",
         type=int,
-        choices=range(0, 11),
-        metavar="[0-10]",
+        choices=range(0, 110),
+        metavar="[0-9]",
         help=(
             "Directly run a specific tool without the interactive menu:\n"
             " 0 = Show Configuration\n"
@@ -63,11 +63,11 @@ def main():
     while True:
         try:
             print_menu()
-            selected_option = input("Select an option (0-10): ").strip()
+            selected_option = input("Select an option (0-9): ").strip()
             try:
                 choice = int(selected_option)
             except ValueError:
-                print("\n[Error] Invalid input. Please enter a number between 0 and 10.")
+                print("\n[Error] Invalid input. Please enter a number between 0 and 9.")
                 sleep(2) # Add a delay before showing the menu again
                 continue
             if choice == 0:
@@ -95,8 +95,6 @@ def main():
             elif choice == 10:
                 print("Exiting program. Goodbye!")
                 sys.exit(0)
-            elif choice == 11:
-                easterEgg()
             else:
                 print("\n[Error] Invalid option. Please try again!\n")
                 sleep(2)
@@ -109,11 +107,9 @@ def main():
             print("\n[Unexpected Error] Something went wrong:")
             print(f"Error Message: {e}\n")
             print("Restarting menu...\n")
-def easterEgg():
-    print("\n[Easter Egg] You found the secret option!")
-    webbrowser.open("https://www.youtube.com/watch?v=xvFZjo5PgG0")
 
 if __name__ == "__main__":
+    #Check if args are parsed with the startup or not.
     args = parse_args()
     if args.tool is not None:
         tools = [
@@ -126,8 +122,7 @@ if __name__ == "__main__":
             password_tools,
             data_hider,
             file_encryption,
-            file_scanner,
-            easterEgg
+            file_scanner
         ]
         tools[args.tool]()
     else:

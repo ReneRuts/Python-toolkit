@@ -192,5 +192,3 @@ Scan directories for files matching a specific pattern and simulate sending an e
   - Uses `http.client` to simulate HTTP status reporting during email operations.
 
 ---
-
-_There is an easter egg hidden in the program! Have Fun!_
