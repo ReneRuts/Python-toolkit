@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument(
         "--tool", "-t",
         type=int,
-        choices=range(0, 110),
+        choices=range(0, 10),
         metavar="[0-9]",
         help=(
             "Directly run a specific tool without the interactive menu:\n"
@@ -63,11 +63,11 @@ def main():
     while True:
         try:
             print_menu()
-            selected_option = input("Select an option (0-9): ").strip()
+            selected_option = input("Select an option (0-10): ").strip()
             try:
                 choice = int(selected_option)
             except ValueError:
-                print("\n[Error] Invalid input. Please enter a number between 0 and 9.")
+                print("\n[Error] Invalid input. Please enter a number between 0 and 10.")
                 sleep(2) # Add a delay before showing the menu again
                 continue
             if choice == 0:
