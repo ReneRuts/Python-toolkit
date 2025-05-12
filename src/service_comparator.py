@@ -82,7 +82,7 @@ def display_service_differences(host_data):
         print(f"Common services across all hosts ({len(common_services)}):")
         for svc in sorted(common_services):
             print(f"  - {svc}")
-
+        sleep(2)
         print("\nUnique services per host:")
         for host in host_data:
             unique = set(host["services"]) - common_services
@@ -116,6 +116,7 @@ def compare_services():
         return
 
     save_comparison_data(host_data)
+    sleep(2)
     display_service_differences(host_data)
     print("\n[Info] Comparison complete!")
 
