@@ -50,7 +50,7 @@ def scrape_with_selenium(url):
 
 def web_scraping():
     print_feature_header("WEB Scraping")
-    url = input("Enter the URL to scrape Format: https://example.com: ").strip()
+    url = input("Enter the URL to scrape; Format: https://example.com: ").strip()
 
     if not is_valid_url(url):
         print("[Error] Invalid URL format! Please enter a valid URL. Format: https://example.com")

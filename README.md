@@ -38,6 +38,20 @@ To run the toolkit:
 
 ---
 
+## Preconfigured Tests
+
+The program includes some preconfigured tests to check if everything works as it should.
+
+> **Note:** Please keep in mind that there has to be an active http or https server running on your localhost using port 80 to make all tests succeed.
+>
+> This can be done by doing the following command on your host:
+  
+  ```cmd
+    python -m http.server 80
+  ```
+
+---
+
 ## Main Menu
 
 1. MAC Spoofing  
