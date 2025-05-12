@@ -6,13 +6,15 @@ from pathlib import Path
 from util import print_feature_header
 from config import config
 
+
 def check_port(host, port):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.settimeout(2)
-            return s.connect_ex((host,port)) == 0
+            return s.connect_ex((host, port)) == 0
     except Exception:
         return False
+
 
 def fetch_services_via_ssh(host, username, password):
     services = []
@@ -29,22 +31,8 @@ def fetch_services_via_ssh(host, username, password):
         print(f"[Error] SSH connection failed on {host}: {e}")
     return services
 
-def compare_services():
-    print_feature_header("Service Comparator")
-    try:
-        num_hosts = input(f"Enter the number of hosts to compare (2 - {config.MAX_HOSTS}): ").strip()
-        if num_hosts.isdigit():
-            num_hosts = int(num_hosts)
-        else:
-            print(f"[Error] Invalid input! Please enter a number.")
-            return
-        if num_hosts < 2 or num_hosts > config.MAX_HOSTS:
-            print(f"[Error] Invalid number! Only 2 - {config.MAX_HOSTS} hosts supported.")
-            return
-    except ValueError:
-        print("[Error] Please enter a valid number.")
-        return
-    
+
+def collect_host_data(num_hosts):
     host_data = []
     for i in range(num_hosts):
         print(f"\nHost {i+1}:")
@@ -61,19 +49,73 @@ def compare_services():
         open_ports = {port: check_port(host, port) for port in config.DEFAULT_PORTS}
         host_data.append({
             "host": host,
-            "services": services,
+            "services": sorted(set(services)),
             "open_ports": open_ports
         })
-    
+    return host_data
+
+
+def save_comparison_data(host_data):
     output_dir = Path("output/service_comparator")
     output_dir.mkdir(parents=True, exist_ok=True)
-    print("\n[Info] Getting ready to save the data...")
     json_file_path = output_dir / "services_comparison.json"
     with open(json_file_path, "w") as json_file:
         json.dump(host_data, json_file, indent=4)
-    
     print(f"\n[Info] Data saved successfully to {json_file_path}.")
+
+
+def display_service_differences(host_data):
+    print("\n[Comparison Result]")
+    all_service_sets = [set(host["services"]) for host in host_data]
+    common_services = set.intersection(*all_service_sets)
+
+    if len(host_data) < 2:
+        print("[Error] Not enough host data to compare.")
+        return
+
+    if all(service_set == all_service_sets[0] for service_set in all_service_sets[1:]):
+        print("There are no differences for the services for all the hosts.")
+    else:
+        print(f"Common services across all hosts ({len(common_services)}):")
+        for svc in sorted(common_services):
+            print(f"  - {svc}")
+
+        print("\nUnique services per host:")
+        for host in host_data:
+            unique = set(host["services"]) - common_services
+            if unique:
+                print(f"\nHost: {host['host']}")
+                for svc in sorted(unique):
+                    print(f"  - {svc}")
+            else:
+                print(f"\nHost: {host['host']} has no unique services.")
+
+
+def compare_services():
+    print_feature_header("Service Comparator")
+    try:
+        num_hosts = input(f"Enter the number of hosts to compare (2 - {config.MAX_HOSTS}): ").strip()
+        if num_hosts.isdigit():
+            num_hosts = int(num_hosts)
+        else:
+            print(f"[Error] Invalid input! Please enter a number.")
+            return
+        if num_hosts < 2 or num_hosts > config.MAX_HOSTS:
+            print(f"[Error] Invalid number! Only 2 - {config.MAX_HOSTS} hosts supported.")
+            return
+    except ValueError:
+        print("[Error] Please enter a valid number.")
+        return
+
+    host_data = collect_host_data(num_hosts)
+    if len(host_data) < 2:
+        print("[Error] Not enough valid hosts to compare.")
+        return
+
+    save_comparison_data(host_data)
+    display_service_differences(host_data)
     print("\n[Info] Comparison complete!")
+
 
 def config_menu():
     print("0. Modify MAX_HOSTS")
@@ -86,41 +128,38 @@ def config_menu():
         new_max_hosts = input(f"Enter new MAX_HOSTS value (Current: {config.MAX_HOSTS} max=100, \"quit\" to keep): ").strip()
         if new_max_hosts == "quit":
             print("[Info] Keeping current MAX_HOSTS value.")
-        elif new_max_hosts == "" or not new_max_hosts.isdigit():
+            return
+        elif not new_max_hosts.isdigit():
             print("[Error] Invalid value! Must be a positive integer.")
-        else: 
-            new_max_hosts = int(new_max_hosts)
-        if new_max_hosts < 1:
-            print("[Error] Invalid value! Must be greater than 0.")
-        elif new_max_hosts > 100:
-            print("[Error] Invalid value! Must be less than or equal to 100.")
+            return
+        new_max_hosts = int(new_max_hosts)
+        if new_max_hosts < 1 or new_max_hosts > 100:
+            print("[Error] Invalid value! Must be between 1 and 100.")
         else:
             config.update_config(max_hosts=new_max_hosts)
             print(f"[Info] MAX_HOSTS updated to {config.MAX_HOSTS}.")
     elif choice == "1":
-        new_ports = input(f"Enter new DEFAULT_PORTS separated by a comma, (Current: {config.DEFAULT_PORTS}, \"quit\" to keep): ").strip()
+        new_ports = input(f"Enter new DEFAULT_PORTS separated by a comma (Current: {config.DEFAULT_PORTS}, \"quit\" to keep): ").strip()
         if new_ports == "quit":
             print("[Info] Keeping current DEFAULT_PORTS value.")
-        elif new_ports == "" or len(new_ports.split(",")) == 0:
-            print("[Error] Invalid value! Must be a comma-separated list of ports.")
-        elif not all(port.strip().isdigit() for port in new_ports.split(",")):
-            print("[Error] Invalid value! Must be a comma-separated list of ports.")
         elif new_ports == "all":
             config.update_config(default_ports=[i for i in range(1, 65536)])
             print(f"[Info] DEFAULT_PORTS updated to all ports (1-65535).")
+        elif not all(p.strip().isdigit() for p in new_ports.split(",")):
+            print("[Error] Invalid input! Ports must be integers separated by commas.")
         else:
-            new_ports_list = [int(port.strip()) for port in new_ports.split(",") if port.strip().isdigit()]
+            new_ports_list = [int(p.strip()) for p in new_ports.split(",")]
             config.update_config(default_ports=new_ports_list)
             print(f"[Info] DEFAULT_PORTS updated to {config.DEFAULT_PORTS}.")
     elif choice == "2":
         print("\nReturning to Service Comparator Menu...\n")
-        return
     elif choice == "3":
         print("Exiting program. Goodbye!")
         exit(0)
     else:
         print("[Error] Invalid option. Please try again!")
         sleep(2)
+
 
 def modify_config():
     print_feature_header("Modify Service Comparator Configuration")
@@ -134,6 +173,7 @@ def modify_config():
         print(f"[Error] Something went wrong: {e}")
         sleep(2)
 
+
 def display_info():
     print_feature_header("Service Comparator Info")
     print("\n- Compares active services across multiple hosts.")
@@ -143,6 +183,7 @@ def display_info():
     print("~~ Results are saved in JSON format. ~~")
     print("-" * 40)
     input("Press Enter to continue...")
+
 
 def main():
     while True:
@@ -156,7 +197,7 @@ def main():
             print("----------------------------------")
 
             choice = input("Select an option (0-4): ").strip()
-            
+
             if choice == "0":
                 display_info()
             elif choice == "1":
@@ -174,6 +215,7 @@ def main():
         except KeyboardInterrupt:
             print("\n[Warning] Please use option 3 to exit!\n")
             sleep(2)
+
 
 if __name__ == "__main__":
     main()
