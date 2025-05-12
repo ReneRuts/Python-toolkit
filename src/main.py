@@ -2,7 +2,7 @@ import webbrowser
 import sys
 import argparse
 from time import sleep
-from config import config
+from Config import config
 from mac_spoofing import main as mac_spoofing
 from web_scraping import main as web_scraping
 from service_comparator import main as service_comparator

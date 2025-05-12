@@ -4,7 +4,7 @@ import paramiko
 from time import sleep
 from pathlib import Path
 from util import print_feature_header
-from config import config
+from Config import config
 
 
 def check_port(host, port):

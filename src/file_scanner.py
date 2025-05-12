@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from pathlib import Path
 from util import print_feature_header
-from config import config
+from Config import config
 
 def scan_files(directory, pattern):
     try:

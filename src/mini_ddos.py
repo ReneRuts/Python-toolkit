@@ -2,7 +2,7 @@ import threading
 import time
 import socket
 import sys
-from config import config
+from Config import config
 from util import print_feature_header
 
 def send_packet():

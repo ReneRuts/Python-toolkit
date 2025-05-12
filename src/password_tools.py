@@ -3,7 +3,7 @@ import random
 import itertools
 from time import sleep
 from passlib.hash import sha256_crypt
-from config import config
+from Config import config
 from util import print_feature_header
 
 def generate_password(length=None):

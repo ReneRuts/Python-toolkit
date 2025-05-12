@@ -4,7 +4,7 @@ import shutil
 from send2trash import send2trash
 from datetime import datetime
 from util import print_feature_header
-from config import config
+from Config import config
 
 
 
