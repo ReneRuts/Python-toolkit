@@ -30,9 +30,25 @@ To run the toolkit:
 
 4. Run the main script:
 
-    ```cmd
-    python src\main.py
-    ```
+    1. Through python
+
+          ```cmd
+          python src\main.py
+          ```
+
+    2. Through arguments
+
+          Get help.
+
+          ```cmd
+          python src\main.py --help
+          ```
+
+          Run a tool.
+
+          ```cmd
+          python src\main.py --tool [1-10]
+          ```
 
     The main script serves as a menu for accessing each toolkit feature.
 
