@@ -37,7 +37,7 @@ def generate_password(length=None):
     return ''.join(password_chars)
 
 
-
+# analyze the strength of a password using a score system.
 def analyze_strength(password):
     print("\n[Analysis Result]")
     score = 0

@@ -83,4 +83,5 @@ class Config:
 
         print("----------------------------------")
 
+# makes sure only 1 instance is active during the program, Config isn't called!
 config = Config()

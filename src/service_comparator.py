@@ -16,6 +16,7 @@ def check_port(host, port):
         return False
 
 
+# connect to the host using ssh to get services.
 def fetch_services_via_ssh(host, username, password):
     services = []
     try:

@@ -3,10 +3,9 @@ from pathlib import Path
 import shutil
 from send2trash import send2trash
 from datetime import datetime
+from time import sleep
 from util import print_feature_header
 from Config import config
-
-
 
 def get_key_file_path():
     OUTPUT_DIR = Path("output/secure_file_encryption_and_decryption")
@@ -35,6 +34,7 @@ def load_key():
         print(f"[Error] Could not read key: {e}")
         return None
 
+# function to encrypt a file by using a key.
 def encrypt_file():
     OUTPUT_DIR = Path("output/secure_file_encryption_and_decryption")
     if not OUTPUT_DIR.exists():
@@ -55,7 +55,7 @@ def encrypt_file():
         backup_path = OUTPUT_DIR / (file_path.stem + f"_backup_{datetime.now().strftime('%Y%m%d%H%M%S')}{file_path.suffix}")
         shutil.copy2(file_path, backup_path)
         print(f"[Info] Backup created at {backup_path}")
-
+        sleep(2) # delay for having a nicer output.
         data = file_path.read_bytes()
         encrypted_data = fernet.encrypt(data)
         encrypted_path = OUTPUT_DIR / (file_path.name + ".enc")

@@ -30,6 +30,7 @@ def print_menu():
     print("10. Exit")
     print("----------------------------------")
 
+# make it so the parseargs works.
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Python Toolkit - SACA: A multifunctional toolkit for networking, security, and automation.",

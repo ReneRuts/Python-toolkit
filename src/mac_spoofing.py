@@ -26,7 +26,7 @@ def is_valid_mac(mac):
     pattern = r"([0-9a-f-A-F]{2}:){5}[0-9a-f-A-F]{2}"
     return True if re.match(pattern, mac) else False
 
-# Change the MAC address of the interface the user selected.
+# Change the MAC address of the interface thats selected.
 def change_mac_address(interface, new_mac):
     try:
         if not is_valid_mac(new_mac):

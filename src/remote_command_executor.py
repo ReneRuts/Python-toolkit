@@ -3,6 +3,7 @@ import subprocess
 from util import print_feature_header
 from time import sleep
 
+# execute commands using SSH.
 def remote_execute_command(host, username, password, command):
     try:
         print(f"[Info] Connecting to {host}...")
