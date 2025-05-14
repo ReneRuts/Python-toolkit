@@ -28,7 +28,7 @@ To run the toolkit:
     pip install -r requirements.txt
     ```
 
-    > **Note:** Some features may require additional system dependencies, such as `chromedriver` for Selenium. Ensure you have the necessary permissions.
+    > **Note:** Some features may require additional system dependencies, such as `chromedriver` for Web Scraping. Also ensure you have the necessary permissions.
 
 4. Run the main script:
 
@@ -67,6 +67,10 @@ The program includes some preconfigured tests to check if everything works as it
   ```cmd
     python -m http.server 80
   ```
+
+Since there is a `pytest.ini` file it is required to run the tests when in the 'my-project' folder.
+
+By running the command `pytest` inside the my-project folder, the tests will run.
 
 ---
 
@@ -118,10 +122,8 @@ Scrape static and dynamic websites to extract data quickly and efficiently.
 
 - **Test Example:**
   - We validate the URL format using regex to ensure it's in the correct format.
-  - The `fetch_html` function is tested by confirming that HTML content is returned and contains an `<html>` tag.
+  - The `fetch_html` function is tested by confirming that HTML content is returned and contains an `</html>` tag.
   - The `parse_html` function is tested by confirming that the extracted title and headers match expected content.
-
-  Full tests are available in `test_web_scraping.py` to verify correct operation.
 
 ---
 

@@ -1,6 +1,6 @@
 import re
 from src.password_tools import generate_password, analyze_strength
-from src.config import config
+from src.Config import config
 
 config.update_config(
     pass_lower=True,

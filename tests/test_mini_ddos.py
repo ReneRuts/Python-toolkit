@@ -1,5 +1,5 @@
 from src.mini_ddos import send_packet, send_packets_threaded
-from src.config import config
+from src.Config import config
 
 def test_send_packet_runs_without_exception():
     result = send_packet()
