@@ -11,13 +11,13 @@ To run the toolkit:
 1. Clone the repository:
 
     ```cmd
-    git clone git@gitlab.ti.howest.be:ti/2024-2025/s2/scripting-and-code-analysis/projects/rene-ruts/my-project.git
+    git clone git@github.com:ReneRuts/Python-toolkit.git
     ```
 
 2. Navigate to the project directory:
 
     ```cmd
-    cd my-project
+    cd Python-toolkit
     ```
 
 3. Create a Virtual Environment & Install the required libraries:
@@ -68,9 +68,9 @@ The program includes some preconfigured tests to check if everything works as it
     python -m http.server 80
   ```
 
-Since there is a `pytest.ini` file it is required to run the tests when in the 'my-project' folder.
+Since there is a `pytest.ini` file it is required to run the tests when in the 'Python-toolkit' folder.
 
-By running the command `pytest` inside the my-project folder, the tests will run.
+By running the command `pytest` inside the Python-toolkit folder, the tests will run.
 
 ---
 
